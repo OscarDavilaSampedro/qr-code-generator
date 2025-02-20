@@ -10,9 +10,17 @@
   },
   "dependencies": {
     "expo": "~52.0.35",
-    "expo-status-bar": "~2.0.1",
+    "expo-image-picker": "~16.0.6",
+    "expo-media-library": "~17.0.6",
+    "expo-sharing": "~13.0.1",
     "react": "18.3.1",
-    "react-native": "0.76.7"
+    "react-native": "0.76.7",
+    "react-native-gesture-handler": "~2.20.2",
+    "react-native-paper": "^5.13.1",
+    "react-native-qrcode-svg": "^6.3.14",
+    "react-native-reanimated": "^3.16.7",
+    "react-native-view-shot": "~4.0.3",
+    "reanimated-color-picker": "^3.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

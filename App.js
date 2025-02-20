@@ -1,20 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import AdvancedQRGenerator from "./src/components/AdvancedQRGenerator";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Provider as PaperProvider } from "react-native-paper";
+import { SafeAreaView, StyleSheet } from "react-native";
+import React from "react";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <PaperProvider>
+        <SafeAreaView style={styles.container}>
+          <AdvancedQRGenerator
+            allowCustomization={true}
+            mainButtonText="Abrir QR"
+            defaultLink="https://ejemplo.com"
+            mainButtonLabelStyle={{ color: "white" }}
+            mainButtonStyle={{ backgroundColor: "#6200EE" }}
+          />
+        </SafeAreaView>
+      </PaperProvider>
+    </GestureHandlerRootView>
   );
 }
 
+// Estilos básicos para la pantalla principal
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
+    backgroundColor: "#eef2f5",
   },
 });
