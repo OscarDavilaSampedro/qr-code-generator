@@ -26,7 +26,7 @@ export default function AdvancedQRGenerator({
   mainButtonText,
   mainButtonStyle,
   defaultLogo = null,
-  defaultLogoSize = 50,
+  defaultLogoSize = 30,
   mainButtonLabelStyle,
   allowCustomization = true,
   defaultQRColor = "#000000",
