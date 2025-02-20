@@ -2,7 +2,6 @@ import AdvancedQRGenerator from "./src/components/AdvancedQRGenerator";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Provider as PaperProvider } from "react-native-paper";
 import { SafeAreaView, StyleSheet } from "react-native";
-import React from "react";
 
 export default function App() {
   return (
@@ -12,7 +11,7 @@ export default function App() {
           <AdvancedQRGenerator
             allowCustomization={true}
             mainButtonText="Abrir QR"
-            defaultLink="https://ejemplo.com"
+            defaultContent="https://ejemplo.com"
             mainButtonLabelStyle={{ color: "white" }}
             mainButtonStyle={{ backgroundColor: "#6200EE" }}
           />

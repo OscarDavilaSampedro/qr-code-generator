@@ -2,8 +2,8 @@ import ColorPicker, { Panel1, HueSlider } from "reanimated-color-picker";
 import { captureRef } from "react-native-view-shot";
 import * as MediaLibrary from "expo-media-library";
 import * as ImagePicker from "expo-image-picker";
-import React, { useRef, useState } from "react";
 import QRCode from "react-native-qrcode-svg";
+import { useRef, useState } from "react";
 import * as Sharing from "expo-sharing";
 import {
   View,
@@ -31,7 +31,7 @@ export default function AdvancedQRGenerator({
   allowCustomization = true,
   defaultQRColor = "#000000",
   defaultBGColor = "#ffffff",
-  defaultLink = "https://ejemplo.com",
+  defaultContent = "https://ejemplo.com",
   defaultLogoBackgroundColor = "transparent",
 }) {
   // Tema de react-native-paper
@@ -39,7 +39,7 @@ export default function AdvancedQRGenerator({
 
   // Estados para la personalización y control de modales
   const [modalVisible, setModalVisible] = useState(false);
-  const [link, setLink] = useState(defaultLink);
+  const [content, setContent] = useState(defaultContent);
   const [qrColor, setQRColor] = useState(defaultQRColor);
   const [bgColor, setBGColor] = useState(defaultBGColor);
   const [includeLogo, setIncludeLogo] = useState(!!defaultLogo);
@@ -50,22 +50,16 @@ export default function AdvancedQRGenerator({
   const [tempQRColor, setTempQRColor] = useState(qrColor);
   const [tempBGColor, setTempBGColor] = useState(bgColor);
 
-  // Estados para errores de validación
-  const [linkError, setLinkError] = useState(false);
+  // Estados para errores de validación de hex
   const [qrColorError, setQRColorError] = useState(false);
   const [bgColorError, setBGColorError] = useState(false);
 
-  // Expresiones regulares para validación
-  const urlRegex =
-    /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+  // Expresión regular para validar código hexadecimal de 6 dígitos
   const hexRegex = /^#([0-9A-Fa-f]{6})$/;
-
-  const validateUrl = (text) => urlRegex.test(text);
   const validateHex = (text) => hexRegex.test(text);
 
-  // Booleano para saber si el formulario es válido
-  const isFormValid =
-    validateUrl(link) && validateHex(qrColor) && validateHex(bgColor);
+  // El formulario es válido si los colores son hexadecimales válidos
+  const isFormValid = validateHex(qrColor) && validateHex(bgColor);
 
   // Control de animación del modal
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -107,7 +101,6 @@ export default function AdvancedQRGenerator({
   };
 
   const handleShare = async () => {
-    // Comprobación adicional de validación
     if (!isFormValid) {
       Alert.alert("Error", "Por favor, corrige los errores en los campos.");
       return;
@@ -124,7 +117,6 @@ export default function AdvancedQRGenerator({
   };
 
   const handleSave = async () => {
-    // Comprobación adicional de validación
     if (!isFormValid) {
       Alert.alert("Error", "Por favor, corrige los errores en los campos.");
       return;
@@ -211,7 +203,7 @@ export default function AdvancedQRGenerator({
               <View style={[styles.row, styles.qrRow]}>
                 <View collapsable={false} ref={qrRef}>
                   <QRCode
-                    value={link || " "}
+                    value={content || " "}
                     size={150}
                     color={qrColor}
                     backgroundColor={bgColor}
@@ -227,23 +219,18 @@ export default function AdvancedQRGenerator({
               </View>
               {allowCustomization && (
                 <>
-                  {/* Fila del enlace con validación */}
+                  {/* Fila del contenido */}
                   <View style={styles.row}>
                     <TextInput
-                      label="Enlace"
+                      label="Contenido"
                       mode="outlined"
                       style={styles.input}
-                      value={link}
-                      onChangeText={(text) => {
-                        setLink(text);
-                        setLinkError(!validateUrl(text));
-                      }}
-                      onBlur={() => setLinkError(!validateUrl(link))}
-                      error={linkError}
+                      value={content}
+                      onChangeText={setContent}
                       autoCapitalize="none"
                     />
                   </View>
-                  {/* Fila del color del QR con validación */}
+                  {/* Fila del color del QR */}
                   <View style={styles.row}>
                     <TouchableOpacity
                       style={[styles.colorCircle, { backgroundColor: qrColor }]}
@@ -263,7 +250,7 @@ export default function AdvancedQRGenerator({
                       autoCapitalize="none"
                     />
                   </View>
-                  {/* Fila del color de fondo con validación */}
+                  {/* Fila del color de fondo */}
                   <View style={styles.row}>
                     <TouchableOpacity
                       style={[styles.colorCircle, { backgroundColor: bgColor }]}
