@@ -34,9 +34,6 @@ export default function AdvancedQRGenerator({
   defaultContent = "https://ejemplo.com",
   defaultLogoBackgroundColor = "transparent",
 }) {
-  // Tema de react-native-paper
-  const theme = useTheme();
-
   // Estados para la personalización y control de modales
   const [modalVisible, setModalVisible] = useState(false);
   const [content, setContent] = useState(defaultContent);
